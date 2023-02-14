@@ -1,7 +1,8 @@
 require './app'
 
-def exit_option
+def exit_option(app)
   puts "\nThank you for using this app!"
+  app.save_data
   exit
 end
 
@@ -17,6 +18,7 @@ end
 def main
   puts "Welcome to catalog app\n"
   app = App.new
+  app.read_data
   choice = 0
   while choice != 10
     puts "\nPlease choose an option by entering a number:"
@@ -31,7 +33,7 @@ def main
     puts '9 - Add a game'
     puts '10 - Exit'
     choice = gets.chomp
-    exit_option if choice == '10'
+    exit_option(app) if choice == '10'
     process_choice(choice, app)
   end
 end
