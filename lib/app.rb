@@ -1,4 +1,5 @@
 require './book'
+require 'json'
 
 class App
   def initialize
@@ -37,7 +38,7 @@ class App
     end
     print 'Publisher:'
     publisher = gets.chomp
-    print 'What state is the cover in good or bad? [G/B]:'
+    print 'What state is the cover in. Good or Bad? [G/B]:'
     cover_state = gets.chomp.downcase
     case cover_state
     when 'g'
@@ -46,6 +47,28 @@ class App
       add_book(publish_date, publisher, 'bad')
     else
       puts "Invalid input, please try again\n"
+    end
+  end
+
+  def save_data
+    arr = []
+    @books.each do |book|
+      arr << {
+        publish_date: book.publish_date,
+        publisher: book.publisher,
+        cover_state: book.cover_state
+      }
+    end
+    File.write('database/books.json', JSON.generate(arr))
+  end
+
+  def read_data
+    return unless File.exist?('database/books.json')
+
+    content = JSON.parse(File.read('database/books.json'))
+    content.each do |item|
+      book = Book.new(item['publish_date'], item['publisher'], item['cover_state'])
+      @books << book
     end
   end
 end
