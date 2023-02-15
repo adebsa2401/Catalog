@@ -1,10 +1,22 @@
+require './app'
+
 def exit_option
   puts "\nThank you for using this app!"
   exit
 end
 
+def process_choice(choice, app)
+  case choice
+  when '1' then app.list_books
+  when '5' then app.list_labels
+  when '7' then app.handle_add_book
+  else puts "Invalid input. Please try again\n"
+  end
+end
+
 def main
   puts "Welcome to catalog app\n"
+  app = App.new
   choice = 0
   while choice != 10
     puts "\nPlease choose an option by entering a number:"
@@ -20,6 +32,7 @@ def main
     puts '10 - Exit'
     choice = gets.chomp
     exit_option if choice == '10'
+    process_choice(choice, app)
   end
 end
 
