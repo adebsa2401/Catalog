@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'date'
 
 class Item
   def initialize(publish_date)
@@ -34,6 +35,6 @@ class Item
   private
 
   def can_be_archived?
-    @publish_date > 10
+    Date.today.year - @publish_date > 10
   end
 end

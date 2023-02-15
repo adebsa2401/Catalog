@@ -1,4 +1,4 @@
-require './item'
+require_relative './item'
 
 class Book < Item
   def initialize(publish_date, publisher, cover_state)
