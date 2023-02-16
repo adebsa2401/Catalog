@@ -24,10 +24,9 @@ class App
     else
       @games.each do |g|
         puts "
-          Published: #{g.publish_date},
-          Last played: #{g.last_played_at},
-          Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}
-        "
+Published: #{g.publish_date}, \
+Last played: #{g.last_played_at}, \
+Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
       end
     end
   end
