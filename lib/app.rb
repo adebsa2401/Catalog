@@ -22,7 +22,13 @@ class App
     if @games.empty?
       puts "No games saved\n"
     else
-      @games.each { |g| puts "Published: #{g.publish_date}, Last played: #{g.last_played_at}, Multiplayer: #{g.multiplayer ? 'Yes' : 'No' }" }
+      @games.each do |g|
+        puts "
+          Published: #{g.publish_date},
+          Last played: #{g.last_played_at},
+          Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}
+        "
+      end
     end
   end
 
