@@ -5,6 +5,8 @@ class App
   def initialize
     @books = []
     @labels = []
+    @authors = []
+    @games = []
   end
 
   def list_books
@@ -50,7 +52,7 @@ class App
     end
   end
 
-  def save_data
+  def save_book_data
     arr = []
     @books.each do |book|
       arr << {
@@ -62,7 +64,24 @@ class App
     File.write('database/books.json', JSON.generate(arr))
   end
 
-  def read_data
+  def save_game_data
+    arr = []
+    @games.each do |game|
+      arr << {
+        publish_date: game.publish_date,
+        last_played_at: game.last_played_at,
+        multiplayer: game.multiplayer
+      }
+    end
+    File.write('database/games.json', JSON.generate(arr))
+  end
+
+  def save_data
+    save_book_data
+    save_game_data
+  end
+
+  def read_book_data
     return unless File.exist?('database/books.json')
 
     content = JSON.parse(File.read('database/books.json'))
@@ -70,5 +89,20 @@ class App
       book = Book.new(item['publish_date'], item['publisher'], item['cover_state'])
       @books << book
     end
+  end
+
+  def read_game_data
+    return unless File.exist?('database/games.json')
+
+    content = JSON.parse(File.read('database/games.json'))
+    content.each do |item|
+      game = Game.new(item['publish_date'], item['multiplayer'], item['last_played_at'])
+      @games << game
+    end
+  end
+
+  def read_data
+    read_book_data
+    read_game_data
   end
 end
