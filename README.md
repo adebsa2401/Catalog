@@ -100,7 +100,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 👤 **Ben**
 
 - GitHub: [@adebsa2401](https://github.com/adebsa2401)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/ben-sal%C3%A8s-2688651b6)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/adebsa)
 
 👤 **Mohamed**
 
