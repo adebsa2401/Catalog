@@ -3,9 +3,11 @@ CREATE TABLE books (
     id                  SERIAL PRIMARY KEY,
     publish_date        DATE,
     archived            BOOLEAN,
-    genre_id            INT REFERENCES genre(id)
-    author_id           INT REFERENCES author(id)
-    source_id           INT REFERENCES source(id)
+    publisher           VARCHAR(100),
+    cover_state         VARCHAR(100),
+    genre_id            INT REFERENCES genre(id),
+    author_id           INT REFERENCES author(id),
+    source_id           INT REFERENCES source(id),
     label_id            INT REFERENCES label(id)
 );
 
@@ -13,8 +15,7 @@ CREATE TABLE books (
 CREATE TABLE label (
     id                  SERIAL PRIMARY KEY,
     title               VARCHAR(100),
-    color               VARCHAR(100),
-    items               JSON
+    color               VARCHAR(100)
 );
 
 -- games table
@@ -22,11 +23,11 @@ CREATE TABLE games (
     id                  SERIAL PRIMARY KEY,
     publish_date        DATE,
     archived            BOOLEAN,
-    genre_id            INT REFERENCES genre(id)
-    author_id           INT REFERENCES author(id)
-    source_id           INT REFERENCES source(id)
-    label_id            INT REFERENCES label(id)
-    multiplayer         BOOLEAN
+    genre_id            INT REFERENCES genre(id),
+    author_id           INT REFERENCES author(id),
+    source_id           INT REFERENCES source(id),
+    label_id            INT REFERENCES label(id),
+    multiplayer         BOOLEAN,
     last_played_at      DATE
 );
 
@@ -34,5 +35,5 @@ CREATE TABLE games (
 CREATE TABLE authors (
     id                  SERIAL PRIMARY KEY,
     first_name          VARCHAR(100),
-    last_name           VARCHAR(100),
+    last_name           VARCHAR(100)
 );
