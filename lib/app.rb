@@ -1,6 +1,8 @@
 require './book'
 require './game'
 require 'json'
+require './music'
+require './genre'
 
 class App
   def initialize
@@ -8,6 +10,8 @@ class App
     @labels = []
     @authors = []
     @games = []
+    @music_album = []
+    @genre = []
   end
 
   def list_books
@@ -15,6 +19,29 @@ class App
       puts "No books saved\n"
     else
       @books.each { |b| puts "Published: #{b.publish_date}, Publisher: #{b.publisher}, Cover state: #{b.cover_state}" }
+    end
+  end
+
+  def list_music_album
+    if @music_album.empty?
+      puts "No music saved\n"
+    else
+      @music_album.each do |m|
+        puts "
+Published: #{m.publish_date}, \
+On spotify: #{m.on_spotify}, \
+"
+      end
+    end
+  end
+
+  def list_genre
+    if @genre.empty?
+      puts "No genre found\n"
+    else
+      @genre.each do |g|
+        puts "Name: #{g.name}"
+      end
     end
   end
 
@@ -53,6 +80,12 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     puts "Book added successfully\n"
   end
 
+  def add_music(publish_date, on_spotify)
+    music = MusicAlbum.new(publish_date, on_spotify)
+    @music_album << music
+    puts "Music added successfully\n"
+  end
+
   def add_game(publish_date, multiplayer, last_played_at)
     game = Game.new(publish_date, multiplayer, last_played_at)
     @games << game
@@ -78,6 +111,18 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     else
       puts "Invalid input, please try again\n"
     end
+  end
+
+  def handle_add_music
+    print 'What is the music album publish date:'
+    publish_date = gets.chomp
+    if publish_date.to_i.zero?
+      puts "\nPlease enter a valid year E.G 2000"
+      return
+    end
+    print 'On spotify [Y/N]:'
+    on_spotify = gets.chomp
+    add_music(publish_date, on_spotify)
   end
 
   def handle_add_game
@@ -116,6 +161,17 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     File.write('database/books.json', JSON.generate(arr))
   end
 
+  def save_music_data
+    arr = []
+    @music_album.each do |music|
+      arr << {
+        publish_date: music.publish_date,
+        on_spotify: music.on_spotify
+      }
+    end
+    File.write('database/music_album.json', JSON.generate(arr))
+  end
+
   def save_game_data
     arr = []
     @games.each do |game|
@@ -131,6 +187,7 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
   def save_data
     save_book_data
     save_game_data
+    save_music_data
   end
 
   def read_book_data
@@ -140,6 +197,26 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     content.each do |item|
       book = Book.new(item['publish_date'], item['publisher'], item['cover_state'])
       @books << book
+    end
+  end
+
+  def read_music_data
+    return unless File.exist?('database/music_album.json')
+
+    content = JSON.parse(File.read('database/music_album.json'))
+    content.each do |item|
+      music = MusicAlbum.new(item['publish_date'], item['on_spotify'])
+      @music_album << music
+    end
+  end
+
+  def read_genre_data
+    return unless File.exist?('database/genre.json')
+
+    content = JSON.parse(File.read('database/genre.json'))
+    content.each do |item|
+      genre = Genre.new(item['name'])
+      @genre << genre
     end
   end
 
@@ -156,5 +233,7 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
   def read_data
     read_book_data
     read_game_data
+    read_music_data
+    read_genre_data
   end
 end
