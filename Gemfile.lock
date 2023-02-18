@@ -43,6 +43,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x64-mingw-ucrt
+  x64-unknown
 
 DEPENDENCIES
   minitest (~> 5.0)
