@@ -136,7 +136,7 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     print 'Multiplayer [Y/N]:'
     multiplayer = gets.chomp.downcase
 
-    print 'When is the game played the last time?:'
+    print 'When is the game played the last time [yyyy-mm-dd]?:'
     last_played_at = gets.chomp
 
     case multiplayer
@@ -147,6 +147,8 @@ Multiplayer: #{g.multiplayer ? 'Yes' : 'No'}"
     else
       puts "Invalid input, please try again\n"
     end
+  rescue StandardError
+    puts "Invalid input, please try again\n"
   end
 
   def save_book_data
