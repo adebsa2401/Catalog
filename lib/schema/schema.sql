@@ -32,8 +32,26 @@ CREATE TABLE games (
 );
 
 -- authors table
-CREATE TABLE authors (
+CREATE TABLE author (
     id                  SERIAL PRIMARY KEY,
     first_name          VARCHAR(100),
     last_name           VARCHAR(100)
+);
+
+-- music table
+CREATE TABLE music_album (
+    id                  SERIAL PRIMARY KEY,
+    on_spotify          BOOLEAN NOT NULL,
+    publish_date        DATE,
+    archived            BOOLEAN,
+    genre_id            INT REFERENCES genre(id),
+    author_id           INT REFERENCES author(id),
+    source_id           INT REFERENCES source(id),
+    label_id            INT REFERENCES label(id),
+);
+
+-- genre table
+CREATE TABLE genre (
+    id                  SERIAL PRIMARY KEY,
+    name                VARCHAR(255) NOT NULL
 );
