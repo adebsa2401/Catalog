@@ -9,10 +9,13 @@ end
 def process_choice(choice, app)
   case choice
   when '1' then app.list_books
+  when '2' then app.list_music_album
   when '3' then app.list_games
+  when '4' then app.list_genre
   when '5' then app.list_labels
   when '6' then app.list_authors
   when '7' then app.handle_add_book
+  when '8' then app.handle_add_music
   when '9' then app.handle_add_game
   else puts "Invalid input. Please try again\n"
   end
